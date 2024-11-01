@@ -29,7 +29,7 @@ Class Usuario{
             $sql->bindValue(":n", $nome);
             $sql->bindValue(":t", $telefone);
             $sql->bindValue(":e", $email);
-            $sql->bindValue("s", $senha);
+            $sql->bindValue(":s", $senha);
             $sql->execute();
             return true;
         }
