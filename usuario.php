@@ -29,9 +29,28 @@ Class Usuario{
             $sql->bindValue(":n", $nome);
             $sql->bindValue(":t", $telefone);
             $sql->bindValue(":e", $email);
-            $sql->bindValue(":s", $senha);
+            $sql->bindValue(":s", md5(md5($senha)));
             $sql->execute();
             return true;
+        }
+    }
+
+    public function logar($email, $senha){
+
+        global $pdo;
+
+        $sqlVerificarEmailSenha = $pdo->prepare("SELECT id_usuario FROM usuario WERE email = :e AND senha = :s");
+        $sqlVerificarEmailSenha->bindValue(":e", $email);
+        $sqlVerificarEmailSenha->bindValue(":s", md5(md5($senha)));
+        $sqlVerificarEmailSenha->execute();
+        if($sqlVerificarEmailSenha->rowCount()>0){
+            $dados = $sqlVerificarEmailSenha->fetch();
+            session_start();
+            $_SESSION['id_usuario'] = $dados['id_usuario'];
+            return true;
+        }
+        else{
+            return false;
         }
     }
 }
