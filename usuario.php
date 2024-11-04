@@ -1,7 +1,7 @@
 <?php
 
 Class Usuario{
-    public $pdo;
+    private $pdo;
     public $msgErro="";
     
     public function connect($nome, $host, $usuario, $senha){
