@@ -1,3 +1,8 @@
+<?php
+    require_once 'usuario.php';
+    $usuario = new Usuario();
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
