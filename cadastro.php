@@ -38,7 +38,7 @@
         if(!empty($nome) && !empty($telefone ) && !empty($email) && !empty($senha) && !empty($confsenha))
         {
             $usuario -> connect("cadastroturma32", "localhost", "root", "");
-            if($usuario -> msgErro == ""){
+            if($usuario->msgErro == ""){
                 
                 if($senha == $confsenha){
 
@@ -56,7 +56,7 @@
                     else{
                         ?>
                         <!-- Inicio da area do html -->
-                        <div id="msg-erro">
+                        <div id="msg-sucesso">
                             Email já cadastrado
                         </div>
                         <!-- Fim da area do html -->                        
@@ -65,7 +65,7 @@
                 }
                 else{
                     ?>
-                    <div id="msg-erro">
+                    <div id="msg-sucesso">
                         Senha e Confirma senha não conferem.
                     </div>
                     <?php
@@ -74,7 +74,7 @@
             else{
                 ?>
                 <!-- Inicio da area do html -->
-                    <div id="msg-erro">
+                    <div id="msg-sucesso">
                         <?php
                             echo"Erro: ". $usuario->msgErro;
                         ?>
@@ -86,7 +86,7 @@
         else{
             ?>
             <!-- Inicio da area do html -->
-                <div id="msg-erro">
+                <div id="msg-sucesso">
                     Preencha todos os campos.
                 </div>
             <!-- Fim da area do html -->                        
