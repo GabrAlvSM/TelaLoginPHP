@@ -39,7 +39,7 @@ Class Usuario{
 
         global $pdo;
 
-        $sqlVerificarEmailSenha = $pdo->prepare("SELECT id_usuario FROM usuario WERE email = :e AND senha = :s");
+        $sqlVerificarEmailSenha = $pdo->prepare("SELECT id_usuario FROM usuario WHERE email = :e AND senha = :s");
         $sqlVerificarEmailSenha->bindValue(":e", $email);
         $sqlVerificarEmailSenha->bindValue(":s", md5(md5($senha)));
         $sqlVerificarEmailSenha->execute();
@@ -52,6 +52,34 @@ Class Usuario{
         else{
             return false;
         }
+    }
+
+    public function listarUsuarios(){
+        
+        global $pdo;
+
+        // try{
+        $sqlGetFrom_usuario = "SELECT * FROM usuario";
+        $sqlPuxaBanco = $pdo->query($sqlGetFrom_usuario);
+        $sqlPuxaBanco->setFetchMode(PDO::FETCH_ASSOC);
+
+        $listaUsuario = [];
+
+        while($row = $sqlPuxaBanco->fetch()>0){
+            $listaUsuario[] = [
+                // "id_usuario"=> $row["id_usuario"],
+                "nome"=> $row["nome"],
+                "telefone"=> $row["telefone"],
+                "email"=> $row["email"],
+                "senha"=> $row["senha"],
+            ];
+        }
+        
+        require "select.view.php";
+        // }
+        // catch(PDOException $erro){
+        //     return "ERRO!";
+        // }   
     }
 }
 
