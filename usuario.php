@@ -43,6 +43,7 @@ Class Usuario{
         $sqlVerificarEmailSenha->bindValue(":e", $email);
         $sqlVerificarEmailSenha->bindValue(":s", md5(md5($senha)));
         $sqlVerificarEmailSenha->execute();
+
         if($sqlVerificarEmailSenha->rowCount()>0){
             $dados = $sqlVerificarEmailSenha->fetch();
             session_start();
@@ -58,28 +59,40 @@ Class Usuario{
         
         global $pdo;
 
-        // try{
-        $sqlGetFrom_usuario = "SELECT * FROM usuario";
-        $sqlPuxaBanco = $pdo->query($sqlGetFrom_usuario);
-        $sqlPuxaBanco->setFetchMode(PDO::FETCH_ASSOC);
+        try{
+            $sqlPuxaBanco = $pdo->query("SELECT * FROM 'usuario'");
+            $sqlPuxaBanco->setFetchMode(PDO::FETCH_ASSOC);
 
-        $listaUsuario = [];
+            // $listaUsuario = [];
 
-        while($row = $sqlPuxaBanco->fetch()>0){
-            $listaUsuario[] = [
-                // "id_usuario"=> $row["id_usuario"],
-                "nome"=> $row["nome"],
-                "telefone"=> $row["telefone"],
-                "email"=> $row["email"],
-                "senha"=> $row["senha"],
-            ];
+            while($row = $sqlPuxaBanco->fetch()){
+                $listaUsuario[] = [
+                    // "id_usuario"=>$row["id_usuario"],
+                    "nome"=>$row["nome"],
+                    "telefone"=>$row["telefone"],
+                    "email"=>$row["email"],
+                    "senha"=>$row["senha"],
+                ];
+            }
+
+            // $sqlPuxaBanco = $pdo->query("SELECT * FROM 'usuario'");
+            // while ($row = $sqlPuxaBanco->fetch_assoc()) 
+            // {
+            //     echo '<tr>';
+            //     // echo '  <td>'.$row["id_usuario"].'</td>';
+            //     echo '  <td>'.$row["nome"].'</td>';
+            //     echo '  <td>'.$row["telefone"].'</td>';
+            //     echo '  <td>'.$row["email"].'</td>';
+            //     echo '  <td>'.$row["senha"].'</td>';
+            //     echo '  <td><a href="'.$_SERVER["PHP_SELF"].'?id='.$row["Id"].'">Editar</a></td>';
+            //     echo '</tr>';
+            // }
+            
+            require "select.view.php";
         }
-        
-        require "select.view.php";
-        // }
-        // catch(PDOException $erro){
-        //     return "ERRO!";
-        // }   
+        catch(PDOException $erro){
+            return "ERRO!";
+        }   
     }
 }
 
