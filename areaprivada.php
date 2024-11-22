@@ -2,9 +2,8 @@
     require_once "usuario.php";
     $usuario = new Usuario();
 
-    $usuario -> connect("cadastroturma32", "localhost", "devweb", "suporte@22");
-
-    // $usuarios = $usuario->listar_usuarios();
+    // $usuario -> connect("cadastroturma32", "localhost", "devweb", "suporte@22");
+    $usuario -> connect("cadastroturma32", "localhost", "root", "");
 ?>
 
 
@@ -19,7 +18,7 @@
 <body>
     <h2>--Usuarios cadastrados--</h2>
 
-    <table class="lista-usuario" style='border: solid 1px black; padding:5px; background-color:wheat; '>
+    <table class="lista-usuario" style='border: solid 1px black; padding:10px; background-color:wheat; '>
         <thead>    
             <tr>
                 <th class="id_usu">Id_usuario</th>
@@ -31,25 +30,41 @@
             </tr>
         </thead>
         <tbody>
+            <?php
+                $sqlFetch = ('SELECT * FROM usuario');
+                $sqlStore = $pdo->prepare($sqlFetch);
+                $sqlStore->execute();
+    
+                $resultado = $sqlStore->fetchAll(PDO::FETCH_OBJ); // PDO::FETCH_ASSOC
 
-            <?php foreach ($usuarios as $usuario): ?>
-                
-                <tr>
-                    <td><?= $usuario['id_usuario'] ?></td>
-                    <td><?= $usuario['nome'] ?></td>
-                    <td><?= $usuario['telefone'] ?></td>
-                    <td><?= $usuario['email'] ?></td>
-                    <td><?= $usuario['senha'] ?></td>
-                    <td>
-                        <td>
-                            <a href="editar.php?id=<?= $usuario['id'] ?>">Editar</a>
-                            <a href="deletar.php?id=<?= $usuario['id'] ?>" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</a>
-                        </td>
-                    </td>
-                </tr>
-
-            <?php endforeach; ?>
+                if($resultado){
+                    foreach($resultado as $row){
+                        ?>
+                            <tr>
+                                <td><?= $row->id_usuario;?></td>
+                                <td><?= $row->nome;?></td>
+                                <td><?= $row->telefone;?></td>
+                                <td><?= $row->email;?></td>
+                                <td><?= $row->senha;?></td>
+                                <td>
+                                    <a href="editar_usu.php?id_usuario<?= $row->id_usuario ?>" style="background-color: #111111; color: grey;">Editar</a>
+                                    <button style="background-color: #111111; color: red;">Excluir</button>
+                                </td>
+                            </tr>
+                        <?php
+                    }
+                }
+                else{
+                    ?>
+                    <tr>
+                        <!-- colspan é a quantidade de colunas da tabela -->
+                        <td colspan="5">Sem dados...</td>
+                    </tr>
+                    <?php                    
+                }
+            ?>
         </tbody>
     </table>
+    <a href="index.php"Cadastre-se>Sair</a></form>
 </body>
 </html>

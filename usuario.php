@@ -9,6 +9,8 @@ Class Usuario{
         
         try{
             $pdo = new PDO("mysql:dbname=".$nome,$usuario,$senha);
+
+            // $usuario -> connect("cadastroturma32", "localhost", "root", "");
         }
         catch(PDOException $erro){
             $msgErro = $erro->getMessage();
@@ -63,14 +65,40 @@ Class Usuario{
         global $pdo;
 
         try{
-            $sql = ("SELECT * FROM usuarios");
-            $temp = $this->pdo->query($sql);
-            return $temp->fetchAll(PDO::FETCH_ASSOC);
+            // $sql = ("SELECT * FROM usuarios");
+            // $temp = $pdo->query($sql);
+            // return $temp->fetchAll(PDO::FETCH_ASSOC);
+
+            $sqlGetFrom_usuario = ("SELECT * FROM usuario");
+            $sqlPuxaBanco = $pdo->query($sqlGetFrom_usuario);
+            $sqlPuxaBanco->fetch(PDO::FETCH_ASSOC);
+
+            $listaUsuario = [];
         }
         catch(PDOException $erro){
             return "ERRO!";
         }
     }
+
+    // public function listar_usuario(){
+    //     global $pdo;
+
+    //     try{
+    //         foreach($sql)
+    //     }
+    // }
+
+    // def select_cliente(self):
+    // self.connect()
+    // try:
+    //     self.cursor.execute('SELECT * FROM cliente')
+    //     clientes = self.cursor.fetchall()
+    //     for registro in clientes:
+    //         print(registro)
+
+    # RETORNA O ERRO
+    // except Exception as err:
+    //     print(err)
 
     // LISTAR USUARIOS POR ID
     public function listar_usuario_id($id_usuario){

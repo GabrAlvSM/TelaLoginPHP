@@ -2,7 +2,8 @@
     require_once 'usuario.php';
     $usuario = new Usuario;
 
-    $usuario -> connect("cadastroturma32", "localhost", "devweb", "suporte@22");
+    // $usuario -> connect("cadastroturma32", "localhost", "devweb", "suporte@22");
+    $usuario -> connect("cadastroturma32", "localhost", "root", "");
 
     if (isset($_GET['id_usuario'])) {
         $id_usuario = $_GET['id_usuario'];
