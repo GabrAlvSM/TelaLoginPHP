@@ -30,7 +30,7 @@
 
             if(!empty($email) && !empty($senha)){
                 
-                $usuario->connect("cadastroturma32", "localhost", "root", "");
+                $usuario -> connect("cadastroturma32", "localhost", "devweb", "suporte@22");
                 if($usuario->msgErro == ""){
 
                     if($usuario->logar($email, $senha)){
@@ -51,7 +51,7 @@
                     <!-- Inicio da area do html -->
                         <div id="msg-sucesso">
                             <?php
-                                echo"Erro: ". $usuario->msgErro;
+                                echo"Erro: ". $usuario->msgErro; 
                             ?>
                         </div>
                     <!-- Fim da area do html -->

@@ -15,7 +15,7 @@
         <label>Nome:</label>
         <input type="text" name="nome" id="" placeholder="Digite seu nome.">
         <label>Telefone:</label>
-        <input type="tel" name="tel" id="" placeholder="Digite seu telefone.">
+        <input type="tel" name="telefone" id="" placeholder="Digite seu telefone.">
         <label>Email:</label>
         <input type="email" name="email" id="" placeholder="Digite seu email.">
         <label>Senha:</label>
@@ -30,14 +30,14 @@
     if(isset($_POST["nome"]))
     {
         $nome = $_POST["nome"];
-        $telefone = $_POST["tel"];
+        $telefone = $_POST["telefone"];
         $email = $_POST["email"];
         $senha = $_POST["senha"];
         $confsenha = addslashes($_POST["confsenha"]);
 
-        if(!empty($nome) && !empty($telefone ) && !empty($email) && !empty($senha) && !empty($confsenha))
+        if(!empty($nome) && !empty($telefone) && !empty($email) && !empty($senha) && !empty($confsenha))
         {
-            $usuario -> connect("cadastroturma32", "localhost", "root", "");
+            $usuario -> connect("cadastroturma32", "localhost", "devweb", "suporte@22");
             if($usuario->msgErro == ""){
                 
                 if($senha == $confsenha){
@@ -76,7 +76,7 @@
                 <!-- Inicio da area do html -->
                     <div id="msg-sucesso">
                         <?php
-                            echo"Erro: ". $usuario->msgErro;
+                            echo"Erro: ".$usuario->msgErro;
                         ?>
                     </div>
                 <!-- Fim da area do html -->                        

@@ -8,7 +8,7 @@ Class Usuario{
         global $pdo;
         
         try{
-            $pdo = new PDO("mysql:dbname=".$nome, $usuario, $senha);
+            $pdo = new PDO("mysql:dbname=".$nome,$usuario,$senha);
         }
         catch(PDOException $erro){
             $msgErro = $erro->getMessage();
@@ -21,6 +21,7 @@ Class Usuario{
         $sql = $pdo->prepare("SELECT id_usuario FROM usuario WHERE email = :m");
         $sql->bindValue(":m", $email);
         $sql->execute();
+
         if ($sql->rowCount() > 0){
             return false;
         }
@@ -35,6 +36,7 @@ Class Usuario{
         }
     }
 
+    // LOGAR
     public function logar($email, $senha){
 
         global $pdo;
@@ -55,44 +57,58 @@ Class Usuario{
         }
     }
 
-    public function listarUsuarios(){
+    // LISTAR TODOS OS USUARIOS
+    public function listar_usuarios(){
         
         global $pdo;
 
         try{
-            $sqlPuxaBanco = $pdo->query("SELECT * FROM 'usuario'");
-            $sqlPuxaBanco->setFetchMode(PDO::FETCH_ASSOC);
-
-            // $listaUsuario = [];
-
-            while($row = $sqlPuxaBanco->fetch()){
-                $listaUsuario[] = [
-                    // "id_usuario"=>$row["id_usuario"],
-                    "nome"=>$row["nome"],
-                    "telefone"=>$row["telefone"],
-                    "email"=>$row["email"],
-                    "senha"=>$row["senha"],
-                ];
-            }
-
-            // $sqlPuxaBanco = $pdo->query("SELECT * FROM 'usuario'");
-            // while ($row = $sqlPuxaBanco->fetch_assoc()) 
-            // {
-            //     echo '<tr>';
-            //     // echo '  <td>'.$row["id_usuario"].'</td>';
-            //     echo '  <td>'.$row["nome"].'</td>';
-            //     echo '  <td>'.$row["telefone"].'</td>';
-            //     echo '  <td>'.$row["email"].'</td>';
-            //     echo '  <td>'.$row["senha"].'</td>';
-            //     echo '  <td><a href="'.$_SERVER["PHP_SELF"].'?id='.$row["Id"].'">Editar</a></td>';
-            //     echo '</tr>';
-            // }
-            
-            require "select.view.php";
+            $sql = ("SELECT * FROM usuarios");
+            $temp = $this->pdo->query($sql);
+            return $temp->fetchAll(PDO::FETCH_ASSOC);
         }
         catch(PDOException $erro){
             return "ERRO!";
-        }   
+        }
+    }
+
+    // LISTAR USUARIOS POR ID
+    public function listar_usuario_id($id_usuario){
+        
+        global $pdo;
+
+        try{
+            $sqlPuxaBanco = $pdo->query("SELECT * FROM 'usuario' WHERE id_usuario = :u");
+            $sqlPuxaBanco->bindValue(':u', $id_usuario);
+            $sqlPuxaBanco->execute();
+
+            return $sqlPuxaBanco->fetch(PDO::FETCH_ASSOC); 
+        }
+
+        catch(PDOException $erro){
+            return "ERRO!";
+        }
+    }
+
+    // EDITAR USUARIO
+    public function editar_usuario_id($id_usuario, $nome, $telefone, $email) {
+        global $pdo;
+
+        $sqlEditUsu = $pdo->prepare("UPDATE usuario SET nome = :n, telefone = :t, email = :e WHERE id_usuario = :u");
+        $sqlEditUsu->bindValue(":u", $id_usuario);
+        $sqlEditUsu->bindValue(":n", $nome);
+        $sqlEditUsu->bindValue(":t", $telefone);
+        $sqlEditUsu->bindValue(":e", $email);
+        $sqlEditUsu->execute(); 
+    }
+
+    // EXCLUIR USUARIO
+    public function excluir_usuario_id($id_usuario){
+        global $pdo;
+
+        $sqlDElUsu = $pdo->prepare("DELETE usuario FROM usuario WHERE id_usuario = :u");
+        $sqlDElUsu->bindValue("u", $id_usuario);
+        $sqlDElUsu->execute();
     }
 }
 
