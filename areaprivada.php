@@ -4,6 +4,7 @@
 
     // $usuario -> connect("cadastroturma32", "localhost", "devweb", "suporte@22");
     $usuario -> connect("cadastroturma32", "localhost", "root", "");
+<<<<<<< HEAD
 
     if (isset($_GET['excluir'])) {
         $id_usuario = intval($_GET['excluir']);
@@ -11,6 +12,8 @@
         header("Location: areaprivada.php");
         exit;
     }
+=======
+>>>>>>> ba73175e054be3f6a0e745d5ee4bd861f593312e
 ?>
 
 
@@ -54,9 +57,14 @@
                                 <td><?= $row->email;?></td>
                                 <td><?= $row->senha;?></td>
                                 <td>
+<<<<<<< HEAD
                                     <a href="editar_usu.php?id_usuario<?= $row->id_usuario;?>" style="background-color: #111111; color: grey;">Editar</a>
                                     
                                     <a href="?excluir=<?= $user['id_usuario'] ?>" onclick="return confirm('Confirme para excluir este usuário.')">Excluir</a>
+=======
+                                    <a href="editar_usu.php?id_usuario<?= $row->id_usuario ?>" style="background-color: #111111; color: grey;">Editar</a>
+                                    <button style="background-color: #111111; color: red;">Excluir</button>
+>>>>>>> ba73175e054be3f6a0e745d5ee4bd861f593312e
                                 </td>
                             </tr>
                         <?php

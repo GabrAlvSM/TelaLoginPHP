@@ -80,6 +80,26 @@ Class Usuario{
         }
     }
 
+    // public function listar_usuario(){
+    //     global $pdo;
+
+    //     try{
+    //         foreach($sql)
+    //     }
+    // }
+
+    // def select_cliente(self):
+    // self.connect()
+    // try:
+    //     self.cursor.execute('SELECT * FROM cliente')
+    //     clientes = self.cursor.fetchall()
+    //     for registro in clientes:
+    //         print(registro)
+
+    # RETORNA O ERRO
+    // except Exception as err:
+    //     print(err)
+
     // LISTAR USUARIOS POR ID
     public function listar_usuario_id($id_usuario){
         
