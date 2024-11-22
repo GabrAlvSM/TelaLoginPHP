@@ -9,6 +9,8 @@ Class Usuario{
         
         try{
             $pdo = new PDO("mysql:dbname=".$nome,$usuario,$senha);
+
+            // $usuario -> connect("cadastroturma32", "localhost", "root", "");
         }
         catch(PDOException $erro){
             $msgErro = $erro->getMessage();
@@ -63,9 +65,15 @@ Class Usuario{
         global $pdo;
 
         try{
-            $sql = ("SELECT * FROM usuarios");
-            $temp = $this->pdo->query($sql);
-            return $temp->fetchAll(PDO::FETCH_ASSOC);
+            // $sql = ("SELECT * FROM usuarios");
+            // $temp = $pdo->query($sql);
+            // return $temp->fetchAll(PDO::FETCH_ASSOC);
+
+            $sqlGetFrom_usuario = ("SELECT * FROM usuario");
+            $sqlPuxaBanco = $pdo->query($sqlGetFrom_usuario);
+            $sqlPuxaBanco->fetch(PDO::FETCH_ASSOC);
+
+            $listaUsuario = [];
         }
         catch(PDOException $erro){
             return "ERRO!";
@@ -103,12 +111,12 @@ Class Usuario{
     }
 
     // EXCLUIR USUARIO
-    public function excluir_usuario_id($id_usuario){
+    public function excluirUsuario($id_usuario){
         global $pdo;
 
-        $sqlDElUsu = $pdo->prepare("DELETE usuario FROM usuario WHERE id_usuario = :u");
-        $sqlDElUsu->bindValue("u", $id_usuario);
-        $sqlDElUsu->execute();
+        $sql = $pdo->prepare("DELETE usuario FROM usuario WHERE id_usuario = :idu");
+        $sql->bindValue("idu", $id_usuario);
+        $sql->execute();
     }
 }
 

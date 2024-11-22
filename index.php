@@ -30,7 +30,8 @@
 
             if(!empty($email) && !empty($senha)){
                 
-                $usuario -> connect("cadastroturma32", "localhost", "devweb", "suporte@22");
+                // $usuario -> connect("cadastroturma32", "localhost", "devweb", "suporte@22");
+                $usuario -> connect("cadastroturma32", "localhost", "root", "");
                 if($usuario->msgErro == ""){
 
                     if($usuario->logar($email, $senha)){

@@ -1,6 +1,9 @@
 <?php
-    require_once "usuario.php";
-    $usuario = new Usuario();
+    require_once 'usuario.php';
+    $usuario = new Usuario;
+
+    // $usuario -> connect("cadastroturma32", "localhost", "devweb", "suporte@22");
+    $usuario -> connect("cadastroturma32", "localhost", "root", "");
 ?>
 
 <!DOCTYPE html>
@@ -8,25 +11,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro</title>
+    <title>Editar e Atualizar Usuário</title>
 </head>
-    <h2>Cadastro</h2>
-    <form action="" method="post">
-        <label>Nome:</label>
-        <input type="text" name="nome" id="" placeholder="Digite seu nome.">
-        <label>Telefone:</label>
-        <input type="tel" name="telefone" id="" placeholder="Digite seu telefone.">
-        <label>Email:</label>
-        <input type="email" name="email" id="" placeholder="Digite seu email.">
-        <label>Senha:</label>
-        <input type="password" name="senha" id="" placeholder="Digite sua senha.">
-        <label>Confirmar Senha:</label>
-        <input type="password" name="confsenha" id="" placeholder="Confirme sua senha.">
-        <input type="submit" value="CADASTRAR">
-        <a href="index.php"Cadastre-se>VOLTAR</a>
+    <h2>Editar e Atualizar Usuário</h2>
+    
+    <?php 
+        if(isset($_GET['id_usuario'])){
+            $id_usuario = $_GET['id_usuario'];
+            
+            $query = ('SELECT * FROM usuario WHERE id_usuario=:iu LIMIT 1');
+            $statement = $pdo->prepare($query);
+            $data = [':iu' => $id_usuario];
+            $statement->execute($data);
+            
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
+        }
+        ?>
+    
+    <form action="usuario.php" method="POST">
+    
+    <label for="id_usuario">Id_usuario:</label>
+    <input type="text" name="id_usuario" value="<?= $result['id_usuario']; ?>" required><br><br>
+
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="nome" value="<?= $result['nome']; ?>" required><br><br>
+
+    <label for="telefone">Telefone:</label>
+    <input type="text" id="telefone" name="telefone" value="<?= $result['telefone']; ?>" required><br><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" value="<?= $result['email']; ?>" required><br><br>
+    
+    <label for="senha">Senha:</label>
+    <input type="password" name="senha" value="<?= $result['senha']; ?>" placeholder="Digite sua senha.">
+
+    <button type="submit">Salvar alterações</button>
+        <a href="areaprivada.php"Cadastre-se>VOLTAR</a>
     </form>
 
     <?php
+
     if(isset($_POST["nome"]))
     {
         $nome = $_POST["nome"];
